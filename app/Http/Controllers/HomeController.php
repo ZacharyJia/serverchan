@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function bind()
     {
         $user = Auth::user();
-        if ($user['openid'] == null) {
+        if ($user['openid'] != null) {
             session()->flash('status', '你已经绑定过微信了');
         }
         $app = app('wechat.official_account');
