@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use Log;
+use Hashids;
 
 class WechatController extends Controller
 {
@@ -41,6 +42,7 @@ class WechatController extends Controller
 
     public function detail($id)
     {
+        $id = Hashids::decode($id);
         $msg = Msg::where('id', $id)
             ->first();
         if ($msg != null) {

@@ -29,6 +29,7 @@ class HomeController extends Controller
 
     public function bind()
     {
+        session()->forget('status');
         $user = Auth::user();
         if ($user['openid'] != null) {
             session()->flash('status', '你已经绑定过微信了');
@@ -41,6 +42,7 @@ class HomeController extends Controller
 
     public function sckey()
     {
+        session()->forget('status');
         $user = Auth::user();
         if ($user['sckey'] == null) {
             session()->flash('status', '你还没有sckey');
