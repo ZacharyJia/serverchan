@@ -20,13 +20,24 @@ class WechatController extends Controller
             Log::debug($message);
             switch ($message['MsgType']) {
                 case 'event':
-                    if ($message['Event'] == 'SCAN') {
-                        $user = User::find($message['EventKey']);
-                        if ($user != null) {
-                            $user['openid'] = $message['FromUserName'];
-                            $user->save();
-                            return '绑定成功';
-                        }
+                    switch ($message['Event']) {
+                        case 'SCAN':
+                            $user = User::find($message['EventKey']);
+                            if ($user != null) {
+                                $user['openid'] = $message['FromUserName'];
+                                $user->save();
+                                return '绑定成功';
+                            }
+                            break;
+                        case 'subscribe':
+                            $arr = explode('_', $message['EventKey']);
+                            $user = User::find($arr[1]);
+                            if ($user != null) {
+                                $user['openid'] = $message['FromUserName'];
+                                $user->save();
+                                return '绑定成功';
+                            }
+                            break;
                     }
                     return '欢迎进入';
                     break;
