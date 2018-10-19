@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/bind">绑定微信</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sckey">推送信息</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

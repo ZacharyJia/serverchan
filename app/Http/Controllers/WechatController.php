@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Msg;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,16 @@ class WechatController extends Controller
         });
 
         return $app->server->serve();
+    }
+
+
+    public function detail($id)
+    {
+        $msg = Msg::where('id', $id)
+            ->first();
+        if ($msg != null) {
+            return view('detail', ['msg' => $msg]);
+        }
     }
 
 }

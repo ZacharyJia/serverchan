@@ -39,4 +39,21 @@ class HomeController extends Controller
         return view('bind', ['qr_url' => $url]);
     }
 
+    public function sckey()
+    {
+        $user = Auth::user();
+        if ($user['sckey'] == null) {
+            session()->flash('status', '你还没有sckey');
+        }
+        return view('sckey', ['sckey' => $user['sckey']]);
+    }
+
+    public function gen()
+    {
+        $user = Auth::user();
+        $user['sckey'] = str_random(32);
+        $user->save();
+        return redirect('/sckey');
+    }
+
 }

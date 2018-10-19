@@ -21,4 +21,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/bind', 'HomeController@bind');
 
+Route::get('/sckey', 'HomeController@sckey');
+
+Route::get('/sckey/gen', 'HomeController@gen');
+
+Route::any('/send/{sckey}', 'PushController@push');
+
 Route::any('/wechat', 'WechatController@serve');
+
+Route::get('/detail/{id}', 'WechatController@detail');
