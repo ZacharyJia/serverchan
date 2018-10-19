@@ -13,13 +13,13 @@ class WechatController extends Controller
     public function serve()
     {
         $app = app('wechat.official_account');
+        Log::debug('new message arrived');
         $app->server->push(function ($message) {
             Log::debug($message);
             switch ($message['MsgType']) {
                 case 'event':
-                    if (array_has($message, 'EventKey') && strpos($message['EventKey'], 'qrscene') != false) {
-                        $arr = explode('_', $message['EventKey']);
-                        $user = User::find($arr[1]);
+                    if ($message['Event'] == 'SCAN') {
+                        $user = User::find($message['EventKey']);
                         if ($user != null) {
                             $user['openid'] = $message['FromUserName'];
                             $user->save();
@@ -33,6 +33,8 @@ class WechatController extends Controller
                     break;
             }
         });
+
+        return $app->server->serve();
     }
 
 }
