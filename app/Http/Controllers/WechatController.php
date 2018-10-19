@@ -43,10 +43,15 @@ class WechatController extends Controller
     public function detail($id)
     {
         $id = Hashids::decode($id);
+        if ($id == null) {
+            return 'Sorry, the page you are looking for could not be found.';
+        }
         $msg = Msg::where('id', $id)
             ->first();
         if ($msg != null) {
             return view('detail', ['msg' => $msg]);
+        } else {
+            return 'Sorry, the page you are looking for could not be found.';
         }
     }
 
