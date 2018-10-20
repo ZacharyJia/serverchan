@@ -14,7 +14,7 @@ class PushController extends Controller
         $user = User::where('sckey', $sckey)->first();
         if ($user != null) {
 
-            $channel = $request->input('wechat');
+            $channel = $request->input('channel');
             if (empty($channel)) {
                 if ($user['work_id'] != null) {
                     $channel = 'work';
