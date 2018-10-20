@@ -21,6 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/bind', 'HomeController@bind');
 
+Route::get('/bind_work', 'HomeController@bind_work');
+
+Route::post('/bind_work', 'HomeController@do_bind_work');
+
 Route::get('/sckey', 'HomeController@sckey');
 
 Route::get('/list', 'HomeController@msg_list');
@@ -32,3 +36,5 @@ Route::any('/send/{sckey}', 'PushController@push');
 Route::any('/wechat', 'WechatController@serve');
 
 Route::get('/detail/{id}', 'WechatController@detail');
+
+Route::get('/test', 'PushController@test');

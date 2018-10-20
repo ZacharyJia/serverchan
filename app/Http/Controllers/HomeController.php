@@ -16,6 +16,10 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next){
+            session()->forget('status');
+            return $next($request);
+        });
     }
 
     /**
@@ -30,10 +34,9 @@ class HomeController extends Controller
 
     public function bind()
     {
-        session()->forget('status');
         $user = Auth::user();
         if ($user['openid'] != null) {
-            session()->flash('status', '你已经绑定过微信了');
+            session()->put('status', '你已经绑定过微信了');
         }
         $app = app('wechat.official_account');
         $result = $app->qrcode->temporary(Auth::id(), 600);
@@ -43,10 +46,9 @@ class HomeController extends Controller
 
     public function sckey()
     {
-        session()->forget('status');
         $user = Auth::user();
         if ($user['sckey'] == null) {
-            session()->flash('status', '你还没有sckey');
+            session()->put('status', '你还没有sckey');
         }
         return view('sckey', ['sckey' => $user['sckey']]);
     }
@@ -64,6 +66,33 @@ class HomeController extends Controller
         $msgs = Auth::user()->msgs()->paginate(20);
 
         return view('list', ['msgs' => $msgs]);
+    }
+
+    public function bind_work()
+    {
+        $work_id = Auth::user()->work_id;
+        return view('bind_work', ['work_id' => $work_id]);
+    }
+
+    public function do_bind_work(Request $request)
+    {
+        $work_id = $request->input('work_id');
+        if (empty($work_id)) {
+            session()->put('status', '企业微信ID验证失败');
+            return view('bind_work', ['work_id' => '']);
+        }
+        $app = app('wechat.work');
+        $res = $app->user->get($work_id);
+        if ($res['errcode'] != 0) {
+            session()->put('status', '企业微信ID验证失败');
+            return view('bind_work', ['work_id' => '']);
+        }
+        $user = Auth::user();
+        $user['work_id'] = $work_id;
+        $user->save();
+
+        session()->put('status', '企业微信ID验证成功！');
+        return view('bind_work', ['work_id' => $work_id]);
     }
 
 }

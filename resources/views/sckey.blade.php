@@ -25,8 +25,9 @@
                         <pre>{{ \Illuminate\Support\Facades\Request::root() }}/send/{{ $sckey }}</pre>
                             <br/>
                         <p>
-                            接受两个参数：
+                            接受三个参数：
                             <ul>
+                                <li>channel: 推送渠道，填写 <code>wechat</code>或<code>work</code>，分别表示微信公众号渠道和企业微信渠道。可空。值为空时，会优先选用微信公众号渠道，如果只绑定了企业微信则会自动选择企业微信。</li>
                                 <li>title: 消息标题，最长为256，必填。</li>
                                 <li>content: 消息内容，最长64Kb，可空。</li>
                             </ul>
@@ -51,7 +52,8 @@ function sc_send($title, $content = '' , $key = '{{ $sckey }}'  )
     $postdata = http_build_query(
         array(
             'title' => $text,
-            'content' => $content
+            'content' => $content,
+            'channel' => 'wechat'
         )
     );
 
