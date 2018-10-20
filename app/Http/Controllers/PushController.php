@@ -6,8 +6,6 @@ use App\Msg;
 use App\User;
 use Illuminate\Http\Request;
 use Hashids;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request as RequestFacade;
 
 class PushController extends Controller
 {
@@ -40,10 +38,12 @@ class PushController extends Controller
             $msg['content'] = $content;
             $msg->save();
 
+            $url = $request->root() . '/detail/' . Hashids::encode($msg['id']);
+
             if ($channel == 'wechat') {
-                $this->send_wechat($user, $msg);
+                $this->send_wechat($user, $msg, $url);
             } else {
-                $this->send_work($user, $msg);
+                $this->send_work($user, $msg, $url);
             }
 
             return ['res' => 'success', 'msg' => 'success'];
@@ -52,7 +52,7 @@ class PushController extends Controller
         }
     }
 
-    protected function send_wechat($user, $msg)
+    protected function send_wechat($user, $msg, $url)
     {
         $openid = $user['openid'];
         if ($openid == null) {
@@ -63,7 +63,7 @@ class PushController extends Controller
         $app->template_message->send([
             'touser' => $openid,
             'template_id' => 'jBj-0KtSWQYBef5FEVn78Wudd8ozd67cH2t5quT5t6k',
-            'url' => RequestFacade::root() . '/detail/' . Hashids::encode($msg['id']),
+            'url' => $url,
             'data' => [
                 'title' => $msg['title'],
                 'content' => $msg['content'],
@@ -73,7 +73,7 @@ class PushController extends Controller
         return true;
     }
 
-    protected function send_work($user, $msg)
+    protected function send_work($user, $msg, $url)
     {
         $work_id = $user['work_id'];
         if (empty($work_id)) {
@@ -87,7 +87,7 @@ class PushController extends Controller
             'textcard' => [
                 'title' => $msg['title'],
                 'description' => $msg['content'],
-                'url' => RequestFacade::root() . '/detail/' . Hashids::encode($msg['id']),
+                'url' => $url,
                 'btntxt' => '查看详情',
             ],
         ]);
