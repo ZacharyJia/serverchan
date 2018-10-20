@@ -23,6 +23,8 @@ Route::get('/bind', 'HomeController@bind');
 
 Route::get('/sckey', 'HomeController@sckey');
 
+Route::get('/list', 'HomeController@msg_list');
+
 Route::get('/sckey/gen', 'HomeController@gen');
 
 Route::any('/send/{sckey}', 'PushController@push');

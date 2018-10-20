@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/sckey">推送信息</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/list">历史消息</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

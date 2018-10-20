@@ -37,7 +37,7 @@ class PushController extends Controller
             $app->template_message->send([
                 'touser' => $openid,
                 'template_id' => 'jBj-0KtSWQYBef5FEVn78Wudd8ozd67cH2t5quT5t6k',
-                'url' => 'http://wechat.zacharyjia.me/detail/' . Hashids::encode($msg['id']),
+                'url' => $request->root() . '/detail/' . Hashids::encode($msg['id']),
                 'data' => [
                     'title' => $title,
                     'content' => $content,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Msg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,6 +57,13 @@ class HomeController extends Controller
         $user['sckey'] = str_random(32);
         $user->save();
         return redirect('/sckey');
+    }
+
+    public function msg_list()
+    {
+        $msgs = Auth::user()->msgs()->paginate(20);
+
+        return view('list', ['msgs' => $msgs]);
     }
 
 }
