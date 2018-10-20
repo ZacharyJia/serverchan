@@ -9,6 +9,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "overtrue/laravel-lang": "~3.0",
         "overtrue/laravel-wechat": "~4.0",
         "vinkla/hashids": "^5.1"
     },
