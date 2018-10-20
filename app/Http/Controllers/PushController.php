@@ -83,7 +83,7 @@ class PushController extends Controller
         $res = $app->message->send([
             'touser' => $work_id,
             'msgtype' => 'textcard',
-            'agentid' => '0',
+            'agentid' => env('WECHAT_WORK_AGENT_ID', '0'),
             'textcard' => [
                 'title' => $msg['title'],
                 'description' => $msg['content'],
