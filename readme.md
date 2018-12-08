@@ -1,4 +1,4 @@
-# 基于 Laravel 的低仿 「Server酱」
+# 基于 Laravel 的「Server酱」
 
 ## 关于 Server酱
 
@@ -14,4 +14,20 @@
 测试账号可以为我们提供绝大部分的功能，自然包括高自由度的模板。但是也存在一些限制，比如最多只能有100个用户，会被收在订阅号消息中，以及无法自定义公众号名称中。
 如果你自己有服务号，也可以尝试使用它。
 
-本代码的后端业务代码全部为基于Laravel原创代码。但是前端文案当中使用了一些「Server酱」的文案，如果涉及到版权问题，我将立即移除掉相关内容。
+
+## 部署配置
+```
+> git clone https://github.com/ZacharyJia/serverchan.git
+> cd servercahn
+> composer install
+> cp .env.example .env #配置文件
+```
+然后在.env文件中根据需要配置好APP以及数据库相关的配置
+```
+php artisan migrate #导入数据库
+php artisan serve #启动服务
+```
+
+## 公众号配置
+在`.env`文件中填写好公众号的`WECHAT_OFFICIAL_ACCOUNT_APPID`、`WECHAT_OFFICIAL_ACCOUNT_SECRET`和`WECHAT_OFFICIAL_ACCOUNT_TOKEN`。
+然后增加一个新的模板，需要有`title`和`content`两个字段。增加完成后把模板的id填写到`WECHAT_OFFICIAL_ACCOUNT_TEMPLATE_ID`字段中。

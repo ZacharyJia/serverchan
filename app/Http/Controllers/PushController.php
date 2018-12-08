@@ -62,7 +62,7 @@ class PushController extends Controller
         $app = app('wechat.official_account');
         $app->template_message->send([
             'touser' => $openid,
-            'template_id' => 'jBj-0KtSWQYBef5FEVn78Wudd8ozd67cH2t5quT5t6k',
+            'template_id' => env('WECHAT_OFFICIAL_ACCOUNT_TEMPLATE_ID'),
             'url' => $url,
             'data' => [
                 'title' => $msg['title'],
