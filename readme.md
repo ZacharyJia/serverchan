@@ -18,7 +18,7 @@
 ## 部署配置
 ```
 > git clone https://github.com/ZacharyJia/serverchan.git
-> cd servercahn
+> cd serverchan
 > composer install
 > cp .env.example .env #配置文件
 ```
