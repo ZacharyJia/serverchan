@@ -95,4 +95,21 @@ class HomeController extends Controller
         return view('bind_work', ['work_id' => $work_id]);
     }
 
+    public function unbind_wechat()
+    {
+        $user = Auth::user();
+        $user['openid'] = null;
+        $user->save();
+        return redirect('/bind');
+    }
+
+    public function unbind_work()
+    {
+        $user = Auth::user();
+        $user['work_id'] = null;
+        $user->save();
+        return redirect('/bind_work');
+    }
+
+
 }

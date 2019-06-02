@@ -25,6 +25,10 @@ Route::get('/bind_work', 'HomeController@bind_work');
 
 Route::post('/bind_work', 'HomeController@do_bind_work');
 
+Route::post('/unbind_wechat', 'HomeController@unbind_wechat');
+
+Route::post('/unbind_work', 'HomeController@unbind_work');
+
 Route::get('/sckey', 'HomeController@sckey');
 
 Route::get('/list', 'HomeController@msg_list');
