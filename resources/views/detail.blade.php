@@ -42,7 +42,11 @@
                         <div class="card-header">{{ $msg['title'] }}</div>
 
                         <div class="card-body">
-                            {{ $msg['content'] }}
+                            @if(env("ENABLE_MARKDOWN", false))
+                                {!! Markdown::convertToHtml($msg['content']) !!}
+                            @else
+                                {{ $msg['content'] }}
+                            @endif
                         </div>
                     </div>
                 </div>
