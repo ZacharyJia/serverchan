@@ -63,7 +63,7 @@ class HomeController extends Controller
 
     public function msg_list()
     {
-        $msgs = Auth::user()->msgs()->paginate(20);
+        $msgs = Auth::user()->msgs()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('list', ['msgs' => $msgs]);
     }
