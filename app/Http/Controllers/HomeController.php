@@ -63,7 +63,7 @@ class HomeController extends Controller
 
     public function msg_list()
     {
-        $msgs = Auth::user()->msgs()->paginate(20);
+        $msgs = Auth::user()->msgs()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('list', ['msgs' => $msgs]);
     }
@@ -94,5 +94,22 @@ class HomeController extends Controller
         session()->put('status', '企业微信ID验证成功！');
         return view('bind_work', ['work_id' => $work_id]);
     }
+
+    public function unbind_wechat()
+    {
+        $user = Auth::user();
+        $user['openid'] = null;
+        $user->save();
+        return redirect('/bind');
+    }
+
+    public function unbind_work()
+    {
+        $user = Auth::user();
+        $user['work_id'] = null;
+        $user->save();
+        return redirect('/bind_work');
+    }
+
 
 }
