@@ -21,7 +21,12 @@
                             </div>
                             <button type="submit" class="btn btn-primary">验证并保存</button>
                         </form>
-
+                        <form method="post" action="unbind_work">
+                            <div class="form-group">
+                                {{ csrf_field() }}
+                            </div>
+                            <button type="submit" class="btn btn-danger">解除企业微信绑定</button>
+                        </form>
                     </div>
                 </div>
             </div>
