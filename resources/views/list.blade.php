@@ -14,6 +14,7 @@
                                 <th>标题</th>
                                 <th>内容</th>
                                 <th>时间</th>
+                                <th>推送渠道</th>
                             </tr>
                             @foreach($msgs as $msg)
                                 <tr>
@@ -21,6 +22,7 @@
                                     <td>{{ $msg['title'] }}</td>
                                     <td>{{ $msg['content'] }}</td>
                                     <td>{{ $msg['created_at'] }}</td>
+                                    <td>{{ $msg['channel'] }}</td>
                                 </tr>
                             @endforeach
                         </table>

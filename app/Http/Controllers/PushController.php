@@ -6,6 +6,8 @@ use App\Msg;
 use App\User;
 use Illuminate\Http\Request;
 use Hashids;
+use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 
 class PushController extends Controller
 {
@@ -18,6 +20,8 @@ class PushController extends Controller
             if (empty($channel)) {
                 if ($user['work_id'] != null) {
                     $channel = 'work';
+                } else if ($user['bark_url'] != null) {
+                    $channel = 'bark';
                 } else {
                     $channel = 'wechat';
                 }
@@ -36,12 +40,15 @@ class PushController extends Controller
             $msg['user_id'] = $user['id'];
             $msg['title'] = $title;
             $msg['content'] = $content;
+            $msg['channel'] = $channel;
             $msg->save();
 
             $url = $request->root() . '/detail/' . Hashids::encode($msg['id']);
 
             if ($channel == 'wechat') {
                 $this->send_wechat($user, $msg, $url);
+            } elseif ($channel == 'bark') {
+                $this->send_bark($user, $msg);
             } else {
                 $this->send_work($user, $msg, $url);
             }
@@ -93,5 +100,29 @@ class PushController extends Controller
         ]);
 
         return $res['errcode'] == 0;
+    }
+
+    protected function send_bark($user, $msg)
+    {
+        $bark_url = $user['bark_url'];
+        if (empty($bark_url)) {
+            return ['res' => 'failed', 'msg' => 'you have not set bark url yet!'];
+        }
+
+        $url = $bark_url . '/' . urlencode($msg['title']) . '/' . urlencode($msg['content']);
+        $client = new Client();
+        $response = $client->get($url);
+        if ($response->getStatusCode() == 200) {
+            $body = $response->getBody();
+            $res = json_decode($body, true);
+
+            if ($res['code'] == 200) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

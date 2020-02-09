@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Msg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -109,6 +110,44 @@ class HomeController extends Controller
         $user['work_id'] = null;
         $user->save();
         return redirect('/bind_work');
+    }
+
+    public function bind_bark(Request $request)
+    {
+        $bark_url = Auth::user()->bark_url;
+        return view('bind_bark', [
+            'bark_url' => $bark_url,
+            'push_url' => $request->root() . '/send/' . Auth::user()->sckey . '?channel=bark&title=Server酱推送测试！',
+        ]);
+    }
+
+    public function do_bind_bark(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'url' => 'required|max:255|url',
+        ]);
+
+        if ($validator->fails()) {
+            session()->put('status', 'Bark URL 格式错误');
+            return view('bind_bark', ['bark_url' => '']);
+        }
+
+        $url = $request->input('url');
+
+        $user = Auth::user();
+        $user['bark_url'] = $url;
+        $user->save();
+
+        session()->put('status', 'Bark URL  保存成功！');
+        return redirect('/bind_bark');
+    }
+
+    public function unbind_bark()
+    {
+        $user = Auth::user();
+        $user['bark_url'] = null;
+        $user->save();
+        return redirect('/bind_bark');
     }
 
 

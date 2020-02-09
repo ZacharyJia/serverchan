@@ -40,6 +40,9 @@
                             <a class="nav-link" href="/bind_work">绑定企业微信</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/bind_bark">绑定Bark</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/sckey">推送信息</a>
                         </li>
                         <li class="nav-item">

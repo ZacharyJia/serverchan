@@ -25,9 +25,15 @@ Route::get('/bind_work', 'HomeController@bind_work');
 
 Route::post('/bind_work', 'HomeController@do_bind_work');
 
+Route::get('/bind_bark', 'HomeController@bind_bark');
+
+Route::post('/bind_bark', 'HomeController@do_bind_bark');
+
 Route::post('/unbind_wechat', 'HomeController@unbind_wechat');
 
 Route::post('/unbind_work', 'HomeController@unbind_work');
+
+Route::post('/unbind_bark', 'HomeController@unbind_bark');
 
 Route::get('/sckey', 'HomeController@sckey');
 
